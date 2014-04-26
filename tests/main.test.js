@@ -1,56 +1,31 @@
-describe('mbDi', function() {
-    var di;
+describe('MbDi', function() {
+    var MbDi;
 
     beforeEach(function() {
-        di = mbDi;
+        MbDi = window.MbDi;
     });
 
     it('should exist', function() {
-        expect(di).toEqual(jasmine.any(Object));
+        expect(MbDi).toEqual(jasmine.any(Function));
     });
 
-    describe('properties', function(){
-        it('should have a "source" object', function() {
-            expect(di.source).toBe(null);
-        });
-    });
-
-    describe('registerSource()', function() {
-        it('should exist', function() {
-            expect(di.registerSource).toEqual(jasmine.any(Function));
-        });
+    describe('constructor', function() {
+        var source, di;
 
         it('should set the "source" property', function() {
-            var source = {foo:'bar'};
+            source = {
+                $location: 'a thing',
+                myService: function() {}
+            };
 
-            di.registerSource(source);
+            di = new MbDi(source);
 
             expect(di.source).toBe(source);
         });
     });
 
-    describe('parseParameters()', function() {
-        it('should exist', function() {
-            expect(di.parseParameters).toEqual(jasmine.any(Function));
-        });
-
-        it('should return an array of the parameters of the given function', function() {
-            var fn = function(arg1, arg2, somethingElse, $location) {}
-
-            var result = di.parseParameters(fn);
-
-            expect(result).toEqual(['arg1', 'arg2', 'somethingElse', '$location']);
-        });
-
-        it('should return an empty array if no parameters or no function given', function() {
-            var result = di.parseParameters();
-
-            expect(result).toEqual([]);
-        });
-    });
-
     describe('inject()', function() {
-        var source;
+        var source, di;
 
         beforeEach(function() {
             source = {
@@ -58,7 +33,7 @@ describe('mbDi', function() {
                 myService: function() {}
             };
 
-            di.registerSource(source);
+            di = new MbDi(source);
         });
 
         it('should exist', function() {
@@ -75,14 +50,32 @@ describe('mbDi', function() {
             expect(result).toEqual('A very important message!');
         });
 
-        it('should inject the specified arguments', function() {
-            var fn = function($location, myService) {
-                return Array.prototype.slice.call(arguments);
-            };
+        describe('should inject the specified arguments', function() {
+            it('variant 1', function() {
+                var fn = function($location, myService) {
+                    return Array.prototype.slice.call(arguments);
+                };
 
-            var args = di.inject(fn);
+                var args = di.inject(fn);
 
-            expect(args).toEqual([source.$location, source.myService]);
+                expect(args).toEqual([source.$location, source.myService]);
+            });
+
+            it('variant 2', function() {
+                source = {
+                    myAwesomeFunction: function(){},
+                    theThing: { isHulk: false },
+                    name: 'my source'
+                };
+                di = new MbDi(source);
+                var fn = function(name, myAwesomeFunction, theThing) {
+                    return Array.prototype.slice.call(arguments);
+                };
+
+                var args = di.inject(fn);
+
+                expect(args).toEqual([source.name, source.myAwesomeFunction, source.theThing]);
+            });
         });
 
         it('should throw an error if any arguments do not exist on the source', function() {
@@ -92,7 +85,7 @@ describe('mbDi', function() {
 
             expect(function(){
                 di.inject(fn)
-            }).toThrowError("mbDi: 'thingThatDoesntExistOnSource' does not exist on the registered source object!");
+            }).toThrowError("MbDi: 'thingThatDoesntExistOnSource' does not exist on the registered source object!");
         });
     });
 });
