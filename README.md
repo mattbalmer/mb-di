@@ -53,7 +53,7 @@ That's it! Easy peasy, and no mess.
 
 ## Contact & License Info
 
-Author: Matthew Balmer
-Twitter: [@mattbalmer](http://twitter.com/mattbalmer)
-Website: [http://mattbalmer.com](http://mattbalmer.com)
+Author: Matthew Balmer  
+Twitter: [@mattbalmer](http://twitter.com/mattbalmer)  
+Website: [http://mattbalmer.com](http://mattbalmer.com)  
 License: MIT
