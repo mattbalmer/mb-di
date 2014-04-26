@@ -1,5 +1,4 @@
 # MbDi
-============
 
 Super-lightweight dependency injection system for JavaScript
 
