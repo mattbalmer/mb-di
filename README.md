@@ -1,8 +1,6 @@
 # MbDi
 
-Super-lightweight dependency injection system for JavaScript
-
-## Description
+Super-lightweight DI system for JavaScript.
 
 Allows for injection of variables from a source object into functions based on the parameter names.
 
