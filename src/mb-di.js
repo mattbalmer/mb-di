@@ -15,7 +15,7 @@ MbDi.prototype.inject = (function() {
             var p = params[i];
 
             if( !this.source.hasOwnProperty(p) ) {
-                throw new Error("MbDi: '"+p+"' does not exist on the registered source object!")
+                throw new Error("MbDi: '"+p+"' does not exist on the source object!")
             }
 
             args.push( this.source[p] );

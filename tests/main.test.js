@@ -91,7 +91,7 @@ describe('MbDi', function() {
 
             expect(function(){
                 di.inject(fn)
-            }).toThrowError("MbDi: 'thingThatDoesntExistOnSource' does not exist on the registered source object!");
+            }).toThrowError("MbDi: 'thingThatDoesntExistOnSource' does not exist on the source object!");
         });
 
         it('should not fail if "source" is empty', function() {
