@@ -1,5 +1,5 @@
 var MbDi = function(source) {
-    this.source = source || null;
+    this.source = source || {};
 };
 
 MbDi.prototype.inject = (function() {

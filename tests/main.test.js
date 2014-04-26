@@ -22,6 +22,12 @@ describe('MbDi', function() {
 
             expect(di.source).toBe(source);
         });
+
+        it('should default the "source" property to an empty object', function() {
+            di = new MbDi();
+
+            expect(di.source).toEqual({});
+        });
     });
 
     describe('inject()', function() {
@@ -86,6 +92,18 @@ describe('MbDi', function() {
             expect(function(){
                 di.inject(fn)
             }).toThrowError("MbDi: 'thingThatDoesntExistOnSource' does not exist on the registered source object!");
+        });
+
+        it('should not fail if "source" is empty', function() {
+            di = new MbDi();
+
+            var fn = function() {
+                return 'empty';
+            };
+
+            var args = di.inject(fn);
+
+            expect(args).toEqual('empty');
         });
     });
 });
