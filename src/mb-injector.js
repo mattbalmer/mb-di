@@ -1,12 +1,11 @@
-mb = window.mb || {};
-mb.Injector = (function() {
+(function() {
     // === Helpers ===
     function parseParameters(fn) {
         var fnStr = (fn || '').toString();
         return fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(/([^\s,]+)/g) || [];
     }
 
-    // === Main Export ===
+    // === Injector ===
     var Injector = function(source) {
         this.source = source || {};
     };
@@ -27,5 +26,12 @@ mb.Injector = (function() {
         return fn.apply(null, args);
     };
 
-    return Injector;
+    // === Export ===
+    if(typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+        module.exports = Injector;
+    }
+    else {
+        window.mb = window.mb || {};
+        window.mb.Injector = Injector;
+    }
 }());
