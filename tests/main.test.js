@@ -120,6 +120,23 @@ describe('Injector', function() {
             expect(function(){
                 parseParameters()
             }).toThrowError("parseParameters is not defined");
+        });
+
+        it('should be able to inject variables added to the source after the injector is created', function() {
+            source = {
+                foo: 'bar'
+            };
+
+            injector = new Injector(source);
+            source.bar = function() {
+                return 'foobar!';
+            };
+
+            var args = injector.inject(function(foo, bar) {
+                return Array.prototype.slice.call(arguments);
+            });
+
+            expect(args).toEqual([source.foo, source.bar]);
         })
     });
 });
