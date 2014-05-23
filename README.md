@@ -6,9 +6,7 @@ Allows for injection of variables from a source object into functions based on t
 
 ## Usage
 
-(Optional)
-
-Assign `Injector` to `mb.Injector` for easier use.
+(Optional) Assign `Injector` to `mb.Injector` for easier use.
 
     window.Injector = mb.Injector;
 
