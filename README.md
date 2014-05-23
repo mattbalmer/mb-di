@@ -1,12 +1,18 @@
-# MbDi
+# mb-injector
 
-Super-lightweight DI system for JavaScript.
+Super-lightweight dependency injection system for JavaScript.
 
 Allows for injection of variables from a source object into functions based on the parameter names.
 
 ## Usage
 
-Create a new MbDi instance with any Object.
+(Optional)
+
+Assign `Injector` to `mb.Injector` for easier use.
+
+    window.Injector = mb.Injector;
+
+Create a new Injector instance with any Object.
 
     var source = {
         name: 'My Awesome Thing',
@@ -18,7 +24,7 @@ Create a new MbDi instance with any Object.
         }
     };
 
-    var di = new MbDi(source);
+    var di = new Injector(source);
 
 Now that you have an instance with a registered source, you can start injecting variables into functions.
 
@@ -44,7 +50,7 @@ Now that you have an instance with a registered source, you can start injecting 
 
 If you try to access a key that does not exist, the app will throw an error, rather than return undefined.
 
-    // Error: MbDi: 'thingThatDoesntExist' does not exist on the source object!
+    // Error: mb.Injector: 'thingThatDoesntExist' does not exist on the source object!
     di.inject(function(thingThatDoesntExist) {
 
     });
