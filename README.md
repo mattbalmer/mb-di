@@ -24,18 +24,18 @@ Create a new Injector instance with any Object.
         }
     };
 
-    var di = new Injector(source);
+    var injector = new Injector(source);
 
 Now that you have an instance with a registered source, you can start injecting variables into functions.
 
     // Simply add the key of the variable you want
-    di.inject(function(name) {
+    injector.inject(function(name) {
         // My app's name is: My Awesome Thing!
         console.log("My app's name is: %s!", name);
     });
 
     // Order doesn't matter, the DI is triggered by the paremeter names
-    di.inject(function(config, name, myFunc) {
+    injector.inject(function(config, name, myFunc) {
         // My app's name is: My Awesome Thing!
         console.log("My app's name is: %s!", name);
 
@@ -51,7 +51,7 @@ Now that you have an instance with a registered source, you can start injecting 
 If you try to access a key that does not exist, the app will throw an error, rather than return undefined.
 
     // Error: mb.Injector: 'thingThatDoesntExist' does not exist on the source object!
-    di.inject(function(thingThatDoesntExist) {
+    injector.inject(function(thingThatDoesntExist) {
 
     });
 
