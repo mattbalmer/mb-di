@@ -6,8 +6,11 @@
     }
 
     // === Injector ===
-    var Injector = function(source) {
-        this.source = source || {};
+    var Injector = function(sources, extract) {
+        this.sources = sources || {};
+
+        if(typeof extract === 'function')
+            this.extract = extract;
     };
 
     Injector.prototype.inject = function(fn) {
@@ -16,14 +19,18 @@
         for(var i in params) {
             var p = params[i];
 
-            if( !this.source.hasOwnProperty(p) ) {
-                throw new Error("mb.Injector: '"+p+"' does not exist on the source object!")
+            if( !this.sources.hasOwnProperty(p) ) {
+                throw new Error("mb.Injector: '"+p+"' does not exist in the source map!")
             }
 
-            args.push( this.source[p] );
+            args.push( this.extract(this.sources[p]) );
         }
 
         return fn.apply(null, args);
+    };
+
+    Injector.prototype.extract = function(source) {
+        return source;
     };
 
     // === Export ===

@@ -12,7 +12,7 @@ Allows for injection of variables from a source object into functions based on t
 
 Create a new Injector instance with any Object.
 
-    var source = {
+    var sources = {
         name: 'My Awesome Thing',
         myFunc: function() {
             return 'do something'
@@ -22,7 +22,7 @@ Create a new Injector instance with any Object.
         }
     };
 
-    var injector = new Injector(source);
+    var injector = new Injector(sources);
 
 Now that you have an instance with a registered source, you can start injecting variables into functions.
 
@@ -42,6 +42,34 @@ Now that you have an instance with a registered source, you can start injecting 
 
         // Is the thing enabled? Yes
         console.log("Is the thing enabled? %s", config.thingEnabled ? 'Yes' : 'No');
+    });
+
+
+## Configuration
+
+The way that the injector finds its injected values can be customized by passing a function as the second constructor argument
+
+    var sources = {
+        plugin: {
+            name: 'some plugin',
+            value: function() {
+                return 'foobar';
+            }
+        }
+    }
+
+    var injector = new Injector(sources, function(source) {
+        return source.value;
+    });
+
+    // Also does the same thing:
+    injector.extract = function(source) {
+        return source.value;
+    }
+
+    injector.inject(function(plugin) {
+        // The plugin's name is: foobar
+        console.log("The plugin's value is: %s!", plugin());
     });
 
 ## "How do I break it?"
